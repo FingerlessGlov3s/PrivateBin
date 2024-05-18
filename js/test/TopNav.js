@@ -732,6 +732,11 @@ describe('TopNav', function () {
             function () {
                 const clean = jsdom('', {url: 'https://privatebin.net/?0123456789abcdef#0'});
                 global.URL = require('jsdom-url').URL;
+                // make window.location.href writable, for history pushState to work
+                Object.defineProperty(window.location, 'href', {
+                    writable: true,
+                    value: window.location.href
+                });
                 $('body').html('<button id="rawtextbutton"></button>');
                 const sample = 'example';
                 $.PrivateBin.PasteViewer.setText(sample);
